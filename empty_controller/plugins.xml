@@ -1,0 +1,12 @@
+<library path="lib/libempty_controller">
+
+  <class name="empty_controller/EmptyController" 
+         type="empty_controller::EmptyController" 
+         base_class_type="controller_interface::ControllerBase">
+    <description>
+      This controller does nothing but one can notify someting to the hardware 
+      by just loading this via hardware's doSwitch() method.
+    </description>
+  </class>
+
+</library>
