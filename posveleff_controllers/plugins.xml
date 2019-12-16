@@ -1,0 +1,14 @@
+<library path="lib/libposveleff_controllers">
+
+  <class name="posveleff_controllers/JointPosVelEffController" 
+         type="posveleff_controllers::JointPosVelEffController" 
+         base_class_type="controller_interface::ControllerBase">
+    <description>
+      This controller subscribes std_msgs::Float64Multiarray
+      and forwards first three elements to the hardware as position, velocity and effort commands.
+    </description>
+  </class>
+
+  <!-- TODO: implement a group controller like position_controllers pkg -->
+
+</library>
