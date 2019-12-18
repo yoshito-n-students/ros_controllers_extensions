@@ -44,7 +44,7 @@ public:
     return true;
   }
 
-  virtual void starting() {
+  virtual void starting(const ros::Time & /*time*/) {
     const boost::array< double, 2 > command = {joint_.getPosition(), 0.};
     command_buffer_.writeFromNonRT(command);
   }
