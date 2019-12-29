@@ -1,0 +1,15 @@
+<library path="lib/libsensor_state_controllers">
+
+  <class name="sensor_state_controllers/BatteryStateController" 
+         type="sensor_state_controllers::BatteryStateController" 
+         base_class_type="controller_interface::ControllerBase">
+    <description>
+      The BatteryStateController populates all hardware_interface_extensions/BatteryStateHandles 
+      on the hardware_interface_extensions/BatteryStateInterface
+      and publishes data from the handles as a sensor_msgs/BatteryState msg.
+    </description>
+  </class>
+
+  <!-- TODO: implement other controllers for IMU, image, etc -->
+
+</library>
