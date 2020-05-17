@@ -1,0 +1,47 @@
+<library path="lib/libtask_space_controllers">
+
+  <!-- Velocity controllers -->
+
+  <class name="task_space_controllers/VelocityBasedTwistController" 
+         type="task_space_controllers::VelocityBasedTwistController" 
+         base_class_type="controller_interface::ControllerBase">
+    <description>
+      This controller subscribes twist setpoints in task space. 
+      The controller converts subscribed setpoints to joint velocity setpoints using the Jacobian.
+      The controller expects hardware_interface::VelocityJointInterface for all joints.
+    </description>
+  </class>
+
+  <class name="task_space_controllers/EffortBasedTwistController" 
+         type="task_space_controllers::EffortBasedTwistController" 
+         base_class_type="controller_interface::ControllerBase">
+    <description>
+      This controller subscribes twist setpoints in task space. 
+      The controller converts subscribed setpoints to joint effort setpoints based on a dynamics model.
+      The controller expects hardware_interface::EffortJointInterface for all joints
+    </description>
+  </class>
+
+  <!-- Position controllers -->
+
+  <class name="task_space_controllers/VelocityBasedPoseController" 
+         type="task_space_controllers::VelocityBasedPoseController" 
+         base_class_type="controller_interface::ControllerBase">
+    <description>
+      This controller subscribes pose setpoints in task space. 
+      The controller converts subscribed setpoints to joint velocity setpoints using the Jacobian.
+      The controller expects hardware_interface::VelocityJointInterface for all joints.
+    </description>
+  </class>
+
+  <class name="task_space_controllers/EffortBasedPoseController" 
+         type="task_space_controllers::EffortBasedPoseController" 
+         base_class_type="controller_interface::ControllerBase">
+    <description>
+      This controller subscribes pose setpoints in task space. 
+      The controller converts subscribed setpoints to joint effort setpoints based on a dynamics model.
+      The controller expects hardware_interface::EffortJointInterface for all joints.
+    </description>
+  </class>
+
+</library>
