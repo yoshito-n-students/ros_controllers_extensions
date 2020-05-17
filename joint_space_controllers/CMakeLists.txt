@@ -153,10 +153,7 @@ add_dependencies(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(
-  test
-  src/test.cpp
-)
+# add_executable(${PROJECT_NAME}_node src/test.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -166,20 +163,11 @@ add_executable(
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-add_dependencies(
-  test
-  ${${PROJECT_NAME}_EXPORTED_TARGETS}
-  ${catkin_EXPORTED_TARGETS}
-)
+# add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(
   joint_space_controllers
-  ${catkin_LIBRARIES}
-  ${DART_LIBRARIES}
-)
-target_link_libraries(
-  test
   ${catkin_LIBRARIES}
   ${DART_LIBRARIES}
 )
