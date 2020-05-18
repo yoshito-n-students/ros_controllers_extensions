@@ -58,10 +58,11 @@
   <build_export_depend>posveleff_controllers</build_export_depend>
   -->
   <exec_depend>empty_controller</exec_depend>
+  <exec_depend>joint_space_controller</exec_depend>
   <exec_depend>posvel_controllers</exec_depend>
   <exec_depend>posveleff_controllers</exec_depend>
   <exec_depend>sensor_state_controllers</exec_depend>
-
+  <exec_depend>task_space_controllers</exec_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
