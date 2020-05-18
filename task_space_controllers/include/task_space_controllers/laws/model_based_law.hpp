@@ -8,8 +8,8 @@
 #include <ros/assert.h>
 #include <ros/console.h>
 #include <ros/node_handle.h>
-#include <task_space_controllers/namespace_aliases.hpp>
 #include <task_space_controllers/laws/forward_command_law.hpp>
+#include <task_space_controllers/namespace_aliases.hpp>
 #include <task_space_controllers/utils.hpp>
 
 #include <dart/dynamics/BodyNode.hpp>
