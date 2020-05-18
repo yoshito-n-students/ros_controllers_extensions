@@ -3,7 +3,7 @@
 
 #include <ros/duration.h>
 #include <task_space_controllers/namespace_aliases.hpp>
-#include <task_space_controllers/laws/model_based_law.hpp>
+#include <task_space_controllers/laws/model_data_law.hpp>
 
 #include <dart/math/MathTypes.hpp> // for dm::Jacobian
 
@@ -14,7 +14,7 @@ namespace laws {
 
 // ==========================================================================================
 // a control law that converts acceleration setpoints from the task space to the joint space
-template < typename BaseT = ModelBasedLaw<> > class AccelerationIntegrationLaw : public BaseT {
+template < typename BaseT = ModelDataLaw<> > class AccelerationIntegrationLaw : public BaseT {
 private:
   typedef BaseT Base;
 

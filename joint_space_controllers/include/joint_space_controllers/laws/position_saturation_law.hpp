@@ -12,7 +12,7 @@
 #include <joint_limits_interface/joint_limits_interface.h>
 #include <joint_limits_interface/joint_limits_urdf.h>
 #include <joint_space_controllers/namespace_aliases.hpp>
-#include <joint_space_controllers/laws/model_based_law.hpp>
+#include <joint_space_controllers/laws/model_data_law.hpp>
 #include <ros/console.h>
 #include <ros/duration.h>
 #include <ros/names.h>
@@ -29,7 +29,7 @@ namespace laws {
 
 // ======================================================================================
 // a control law that saturates position setpoints based on joint limits from ros-params
-template < typename BaseT = ModelBasedLaw<> > class PositionSaturationLaw : public BaseT {
+template < typename BaseT = ModelDataLaw<> > class PositionSaturationLaw : public BaseT {
 private:
   typedef BaseT Base;
 

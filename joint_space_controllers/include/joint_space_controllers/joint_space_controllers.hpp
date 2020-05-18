@@ -27,17 +27,17 @@ typedef JointHardware< hi::PositionJointInterface > PositionJointHardware;
 } // namespace hardware
 
 // effort controllers
-typedef EffortControllerFrontend< laws::ForwardCommandLaw, hardware::EffortJointHardware >
+typedef EffortControllerFrontend< laws::ForwardCommandLaw<>, hardware::EffortJointHardware >
     EffortForwardController;
 
 // velocity controllers
-typedef VelocityControllerFrontend< laws::ForwardCommandLaw, hardware::VelocityJointHardware >
+typedef VelocityControllerFrontend< laws::ForwardCommandLaw<>, hardware::VelocityJointHardware >
     VelocityForwardController;
 typedef VelocityControllerFrontend< laws::VelocityToEffortLaw, hardware::EffortJointHardware >
     EffortBasedVelocityController;
 
 // position controllers
-typedef PositionControllerFrontend< laws::ForwardCommandLaw, hardware::PositionJointHardware >
+typedef PositionControllerFrontend< laws::ForwardCommandLaw<>, hardware::PositionJointHardware >
     PositionForwardController;
 typedef PositionControllerFrontend< laws::PositionToEffortLaw, hardware::EffortJointHardware >
     EffortBasedPositionController;
