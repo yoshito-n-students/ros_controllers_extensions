@@ -17,10 +17,15 @@ namespace task_space_controllers {
 
 // control laws
 namespace laws {
+// laws connected to joint space via acceleration integration
 typedef AccelerationIntegrationLaw< jscl::AccelerationToEffortLaw< ModelBasedLaw<> > >
     AccelerationToEffortLaw;
 typedef PoseSaturationLaw< PoseToAccelerationLaw< AccelerationToEffortLaw > > PoseToEffortLaw;
 typedef TwistToPoseLaw< PoseToEffortLaw > TwistToEffortLaw;
+
+// laws connected to joint space via velocity integration
+typedef VelocityIntegrationLaw<> TwistToVelocityLaw;
+typedef PoseSaturationLaw< PoseToTwistLaw< TwistToVelocityLaw > > PoseToVelocityLaw;
 } // namespace laws
 
 // joint hardware types
@@ -31,14 +36,13 @@ typedef jsch::JointHardware< hi::PositionJointInterface > PositionJointHardware;
 } // namespace hardware
 
 // twist controllers
-typedef TwistControllerFrontend< laws::VelocityIntegrationLaw<>, hardware::VelocityJointHardware >
+typedef TwistControllerFrontend< laws::TwistToVelocityLaw, hardware::VelocityJointHardware >
     VelocityBasedTwistController;
 typedef TwistControllerFrontend< laws::TwistToEffortLaw, hardware::EffortJointHardware >
     EffortBasedTwistController;
 
 // pose controllers
-typedef PoseControllerFrontend< laws::PoseToTwistLaw< laws::VelocityIntegrationLaw<> >,
-                                hardware::VelocityJointHardware >
+typedef PoseControllerFrontend< laws::PoseToVelocityLaw, hardware::VelocityJointHardware >
     VelocityBasedPoseController;
 typedef PoseControllerFrontend< laws::PoseToEffortLaw, hardware::EffortJointHardware >
     EffortBasedPoseController;
