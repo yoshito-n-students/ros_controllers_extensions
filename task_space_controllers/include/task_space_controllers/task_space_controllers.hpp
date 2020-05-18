@@ -5,7 +5,7 @@
 #include <joint_space_controllers/laws/acceleration_to_effort_law.hpp>
 #include <task_space_controllers/controller_frontends.hpp>
 #include <task_space_controllers/laws/acceleration_integration_law.hpp>
-#include <task_space_controllers/laws/model_based_law.hpp>
+#include <task_space_controllers/laws/model_data_law.hpp>
 #include <task_space_controllers/laws/pose_saturation_law.hpp>
 #include <task_space_controllers/laws/pose_to_acceleration_law.hpp>
 #include <task_space_controllers/laws/pose_to_twist_law.hpp>
@@ -18,7 +18,7 @@ namespace task_space_controllers {
 // control laws
 namespace laws {
 // laws connected to joint space via acceleration integration
-typedef AccelerationIntegrationLaw< jscl::AccelerationToEffortLaw< ModelBasedLaw<> > >
+typedef AccelerationIntegrationLaw< jscl::AccelerationToEffortLaw< ModelDataLaw<> > >
     AccelerationToEffortLaw;
 typedef PoseSaturationLaw< PoseToAccelerationLaw< AccelerationToEffortLaw > > PoseToEffortLaw;
 typedef TwistToPoseLaw< PoseToEffortLaw > TwistToEffortLaw;

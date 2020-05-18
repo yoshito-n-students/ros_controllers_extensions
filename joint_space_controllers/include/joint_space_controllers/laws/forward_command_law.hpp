@@ -13,7 +13,7 @@ namespace laws {
 
 // =====================================================================
 // simplest control law that forwards commands without any modification
-class ForwardCommandLaw : public AbstractLaw {
+template < typename AbstractT = AbstractLaw > class ForwardCommandLaw : public AbstractT {
 public:
   ForwardCommandLaw() {}
 

@@ -2,7 +2,7 @@
 #define TASK_SPACE_CONTROLLERS_LAWS_POSE_TO_TWIST_LAW_HPP
 
 #include <ros/duration.h>
-#include <task_space_controllers/laws/model_based_law.hpp>
+#include <task_space_controllers/laws/model_data_law.hpp>
 
 #include <Eigen/Core>
 
@@ -12,7 +12,7 @@ namespace laws {
 // ==============================================================
 // a control law that converts pose setpoints to twist setpoints
 // by simple differential operation
-template < typename BaseT = ModelBasedLaw<> > class PoseToTwistLaw : public BaseT {
+template < typename BaseT = ModelDataLaw<> > class PoseToTwistLaw : public BaseT {
 private:
   typedef BaseT Base;
 

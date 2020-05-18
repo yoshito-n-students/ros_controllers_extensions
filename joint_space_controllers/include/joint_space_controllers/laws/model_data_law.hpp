@@ -1,11 +1,11 @@
-#ifndef JOINT_SPACE_CONTROLLERS_LAWS_MODEL_BASED_LAW_HPP
-#define JOINT_SPACE_CONTROLLERS_LAWS_MODEL_BASED_LAW_HPP
+#ifndef JOINT_SPACE_CONTROLLERS_LAWS_MODEL_DATA_LAW_HPP
+#define JOINT_SPACE_CONTROLLERS_LAWS_MODEL_DATA_LAW_HPP
 
 #include <map>
 #include <memory>
 #include <string>
 
-#include <joint_space_controllers/laws/forward_command_law.hpp>
+#include <joint_space_controllers/laws/abstract_law.hpp>
 #include <joint_space_controllers/laws/ros_package_resource_retriever.hpp>
 #include <joint_space_controllers/namespace_aliases.hpp>
 #include <joint_space_controllers/utils.hpp>
@@ -28,31 +28,24 @@ namespace laws {
 
 // =================================================
 // a base control law for dynamics model based laws
-template < typename BaseT = ForwardCommandLaw > class ModelBasedLaw : public BaseT {
-private:
-  typedef BaseT Base;
-
+template < typename AbstractT = AbstractLaw > class ModelDataLaw : public AbstractT {
 public:
-  ModelBasedLaw() {}
+  ModelDataLaw() {}
 
-  virtual ~ModelBasedLaw() {}
+  virtual ~ModelDataLaw() {}
 
   // ==============================================
   // name-based interface for controller frontends
   // ==============================================
 
   virtual bool init(const ros::NodeHandle &param_nh) override {
-    if (!Base::init(param_nh)) {
-      return false;
-    }
-
     model_ = du::DartLoader().parseSkeletonString(
         getRobotDescription(param_nh),
         // base URI to resolve relative URIs in the URDF.
         // this won't be used because almost all URIs are absolute.
         dc::Uri("file:/"), std::make_shared< ROSPackageResourceRetriever >());
     if (!model_) {
-      ROS_ERROR("ModelBasedLaw::init(): Failed to build a dynamics model from "
+      ROS_ERROR("ModelDataLaw::init(): Failed to build a dynamics model from "
                 "robot description");
       return false;
     }
@@ -62,12 +55,12 @@ public:
     // this ensures all DoFs in the model belong to different joints
     // so that we can convert DoF indices & joint names.
     if (model_->getRootJoint()->getNumDofs() > 0) {
-      ROS_ERROR("ModelBasedLaw::init(): Non-fixed root joint");
+      ROS_ERROR("ModelDataLaw::init(): Non-fixed root joint");
       return false;
     }
     BOOST_FOREACH (const dd::Joint *const joint, model_->getJoints()) {
       if (joint->getNumDofs() > 1) {
-        ROS_ERROR_STREAM("ModelBasedLaw::init(): multi-DoF joint '" << joint->getName() << "'");
+        ROS_ERROR_STREAM("ModelDataLaw::init(): multi-DoF joint '" << joint->getName() << "'");
         return false;
       }
     }
@@ -75,17 +68,17 @@ public:
     return true;
   }
 
+  virtual void starting() override {}
+
   // ==================================================
   // update model state based on given joint positions
   virtual void setPositions(const std::map< std::string, double > &positions) override {
-    Base::setPositions(positions);
     setPositionsEigen(jointMapToEigen(positions));
   }
 
   // ===================================================
   // update model state based on given joint velocities
   virtual void setVelocities(const std::map< std::string, double > &velocities) override {
-    Base::setVelocities(velocities);
     setVelocitiesEigen(jointMapToEigen(velocities));
   }
 
@@ -94,9 +87,7 @@ public:
   virtual std::map< std::string, double >
   computeCommands(const std::map< std::string, double > &setpoints,
                   const ros::Duration &dt) override {
-    const std::map< std::string, double > modified_setpoints(
-        eigenToJointMap(computeCommandsEigen(jointMapToEigen(setpoints), dt)));
-    return Base::computeCommands(modified_setpoints, dt);
+    return eigenToJointMap(computeCommandsEigen(jointMapToEigen(setpoints), dt));
   }
 
 protected:
@@ -150,7 +141,7 @@ protected:
 
   std::map< std::string, double > eigenToJointMap(const Eigen::VectorXd &e) const {
     ROS_ASSERT_MSG(e.size() == model_->getNumDofs(),
-                   "ModelBasedLaw::eigenToJointMap(): Invalid vector size");
+                   "ModelDataLaw::eigenToJointMap(): Invalid vector size");
 
     std::map< std::string, double > m;
     for (std::size_t i = 0; i < model_->getNumDofs(); ++i) {

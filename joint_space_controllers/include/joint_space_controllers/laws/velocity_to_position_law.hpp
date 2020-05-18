@@ -1,7 +1,7 @@
 #ifndef JOINT_SPACE_CONTROLLERS_LAWS_VELOCITY_TO_POSITION_LAW_HPP
 #define JOINT_SPACE_CONTROLLERS_LAWS_VELOCITY_TO_POSITION_LAW_HPP
 
-#include <joint_space_controllers/laws/model_based_law.hpp>
+#include <joint_space_controllers/laws/model_data_law.hpp>
 #include <ros/duration.h>
 
 #include <Eigen/Core>
@@ -14,7 +14,7 @@ namespace laws {
 // =====================================================================
 // a control law that converts velocity setpoints to position setpoints
 // by simple accumulation
-template < typename BaseT = ModelBasedLaw<> > class VelocityToPositionLaw : public BaseT {
+template < typename BaseT = ModelDataLaw<> > class VelocityToPositionLaw : public BaseT {
 private:
   typedef BaseT Base;
 

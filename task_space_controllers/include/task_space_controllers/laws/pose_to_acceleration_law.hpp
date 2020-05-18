@@ -10,7 +10,7 @@
 #include <ros/duration.h>
 #include <ros/names.h>
 #include <ros/node_handle.h>
-#include <task_space_controllers/laws/model_based_law.hpp>
+#include <task_space_controllers/laws/model_data_law.hpp>
 #include <task_space_controllers/namespace_aliases.hpp>
 
 #include <boost/foreach.hpp>
@@ -23,7 +23,7 @@ namespace laws {
 // =====================================================================
 // a control law that converts pose setpoints to acceleration setpoints
 // using PID controllers
-template < typename BaseT = ModelBasedLaw<> > class PoseToAccelerationLaw : public BaseT {
+template < typename BaseT = ModelDataLaw<> > class PoseToAccelerationLaw : public BaseT {
 private:
   typedef BaseT Base;
 

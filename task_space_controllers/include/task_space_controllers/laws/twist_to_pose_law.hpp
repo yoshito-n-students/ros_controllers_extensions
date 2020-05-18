@@ -2,7 +2,7 @@
 #define TASK_SPACE_CONTROLLERS_LAWS_TWIST_TO_POSE_LAW_HPP
 
 #include <ros/duration.h>
-#include <task_space_controllers/laws/model_based_law.hpp>
+#include <task_space_controllers/laws/model_data_law.hpp>
 
 #include <boost/math/special_functions/fpclassify.hpp> // for boost::math::isnan()
 
@@ -11,7 +11,7 @@ namespace laws {
 
 // ====================================================================================
 // a control law that converts twist setpoints to pose setpoints by simple integration
-template < typename BaseT = ModelBasedLaw<> > class TwistToPoseLaw : public BaseT {
+template < typename BaseT = ModelDataLaw<> > class TwistToPoseLaw : public BaseT {
 private:
   typedef BaseT Base;
 

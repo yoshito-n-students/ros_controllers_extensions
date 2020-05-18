@@ -2,7 +2,7 @@
 #define TASK_SPACE_CONTROLLERS_LAWS_VELOCITY_INTEGRATION_LAW_HPP
 
 #include <ros/duration.h>
-#include <task_space_controllers/laws/model_based_law.hpp>
+#include <task_space_controllers/laws/model_data_law.hpp>
 #include <task_space_controllers/namespace_aliases.hpp>
 
 #include <dart/math/MathTypes.hpp> // for dm::Jacobian
@@ -14,7 +14,7 @@ namespace laws {
 
 // ======================================================================================
 // a control law that converts velocity setpoints from the task space to the joint space
-template < typename BaseT = ModelBasedLaw<> > class VelocityIntegrationLaw : public BaseT {
+template < typename BaseT = ModelDataLaw<> > class VelocityIntegrationLaw : public BaseT {
 private:
   typedef BaseT Base;
 

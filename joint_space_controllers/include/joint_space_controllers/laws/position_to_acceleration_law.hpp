@@ -9,7 +9,7 @@
 #include <control_toolbox/pid.h>
 #include <hardware_interface/joint_command_interface.h>
 #include <hardware_interface/joint_state_interface.h>
-#include <joint_space_controllers/laws/model_based_law.hpp>
+#include <joint_space_controllers/laws/model_data_law.hpp>
 #include <joint_space_controllers/namespace_aliases.hpp>
 #include <ros/console.h>
 #include <ros/duration.h>
@@ -28,7 +28,7 @@ namespace laws {
 // =========================================================================
 // a control law that converts position setpoints to acceleration setpoints
 // by PID controllers
-template < typename BaseT = ModelBasedLaw<> > class PositionToAccelerationLaw : public BaseT {
+template < typename BaseT = ModelDataLaw<> > class PositionToAccelerationLaw : public BaseT {
 private:
   typedef BaseT Base;
 

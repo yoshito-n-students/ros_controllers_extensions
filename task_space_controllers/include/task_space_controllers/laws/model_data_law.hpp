@@ -4,12 +4,12 @@
 #include <map>
 #include <string>
 
-#include <joint_space_controllers/laws/model_based_law.hpp>
+#include <joint_space_controllers/laws/model_data_law.hpp>
 #include <ros/assert.h>
 #include <ros/console.h>
 #include <ros/node_handle.h>
+#include <task_space_controllers/laws/abstract_law.hpp>
 #include <task_space_controllers/namespace_aliases.hpp>
-#include <task_space_controllers/laws/forward_command_law.hpp>
 #include <task_space_controllers/utils.hpp>
 
 #include <dart/dynamics/BodyNode.hpp>
@@ -21,15 +21,15 @@ namespace laws {
 
 // =================================================
 // a base control law for dynamics model based laws
-template < typename BaseT = jscl::ModelBasedLaw< ForwardCommandLaw > >
-class ModelBasedLaw : public BaseT {
+template < typename AbstractT = AbstractLaw >
+class ModelDataLaw : public jscl::ModelDataLaw< AbstractT > {
 private:
-  typedef BaseT Base;
+  typedef jscl::ModelDataLaw< AbstractT > Base;
 
 public:
-  ModelBasedLaw() {}
+  ModelDataLaw() {}
 
-  virtual ~ModelBasedLaw() {}
+  virtual ~ModelDataLaw() {}
 
   // ==============================================
   // name-based interface for controller frontends
@@ -47,6 +47,12 @@ public:
     return true;
   }
 
+  virtual std::map< std::string, double >
+  computeCommands(const std::map< std::string, double > &setpoints,
+                  const ros::Duration &dt) override {
+    return Base::eigenToJointMap(computeCommandsEigen(dofMapToEigen(setpoints), dt));
+  }
+
   virtual std::map< std::string, double > getPose() const override {
     return eigenToDofMap(getPoseEigen());
   }
@@ -55,6 +61,11 @@ protected:
   // =======================================
   // index-based interface for derived laws
   // =======================================
+
+  virtual Eigen::VectorXd computeCommandsEigen(const Eigen::VectorXd &vd,
+                                               const ros::Duration &dt) override {
+    return Base::computeCommandsEigen(vd, dt);
+  }
 
   Eigen::Vector6d getPoseEigen() const {
     const Eigen::Isometry3d T(model_end_link_->getWorldTransform());
