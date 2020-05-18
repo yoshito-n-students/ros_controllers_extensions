@@ -81,7 +81,7 @@ protected:
   // ================================
 
   static std::string dofIdToName(const std::size_t id) {
-    ROS_ASSERT_MSG(id >= 0 && id < 6, "ModelBasedLaw::dofIdToName(): Invalid id (%d)",
+    ROS_ASSERT_MSG(id >= 0 && id < 6, "ModelDataLaw::dofIdToName(): Invalid id (%d)",
                    static_cast< int >(id));
 
     switch (id) {
