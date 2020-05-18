@@ -2,14 +2,9 @@
 #define TASK_SPACE_CONTROLLERS_UTILS_HPP
 
 #include <map>
-#include <stdexcept>
 #include <string>
 
 #include <ros/assert.h>
-#include <ros/console.h>
-#include <ros/names.h>
-#include <ros/node_handle.h>
-#include <ros/param.h>
 
 namespace task_space_controllers {
 

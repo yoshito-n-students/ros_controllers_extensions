@@ -1,7 +1,6 @@
 #ifndef TASK_SPACE_CONTROLLERS_LAWS_POSE_TO_ACCELERATION_LAW_HPP
 #define TASK_SPACE_CONTROLLERS_LAWS_POSE_TO_ACCELERATION_LAW_HPP
 
-#include <limits>
 #include <map>
 #include <string>
 

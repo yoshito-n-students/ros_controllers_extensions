@@ -7,7 +7,6 @@
 #include <controller_interface/controller.h>
 #include <geometry_msgs/Pose.h>
 #include <geometry_msgs/Twist.h>
-#include <hardware_interface/joint_command_interface.h>
 #include <joint_space_controllers/hardware/abstract_hardware.hpp>
 #include <realtime_tools/realtime_buffer.h>
 #include <ros/console.h>
@@ -45,12 +44,12 @@ public:
     // init the controller backend
     jnt_hw_.reset(new Hardware());
     if (!jnt_hw_->init(hw_iface, controller_nh)) {
-      ROS_ERROR("ControllerFrontendBase::init(): Failed to init the joint hardware");
+      ROS_ERROR("ControllerFrontend::init(): Failed to init the joint hardware");
       return false;
     }
     law_.reset(new Law());
     if (!law_->init(controller_nh)) {
-      ROS_ERROR("ControllerFrontendBase::init(): Failed to init the control law");
+      ROS_ERROR("ControllerFrontend::init(): Failed to init the control law");
       return false;
     }
 

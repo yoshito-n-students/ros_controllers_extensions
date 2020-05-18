@@ -4,6 +4,8 @@
 #include <ros/duration.h>
 #include <task_space_controllers/laws/model_data_law.hpp>
 
+#include <Eigen/Core>
+
 #include <boost/math/special_functions/fpclassify.hpp> // for boost::math::isnan()
 
 namespace task_space_controllers {
