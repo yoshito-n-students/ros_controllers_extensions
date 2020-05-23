@@ -27,7 +27,7 @@ where <img src="https://latex.codecogs.com/gif.latex?\textup{saturate}(\cdot)" /
 ### Velocity-to-position law
 The velocity-to-position law just converts velocity setpoints to position setpoints by accumulating velocity setpoints.
 
-<img src="https://latex.codecogs.com/gif.latex?q_{\textup{sp}}&space;\gets&space;q_{\textup{sp}}+\dot{q}_{\textup{sp}}\delta&space;t" />
+<img src="https://latex.codecogs.com/gif.latex?q_{\textup{sp}}&space;\gets&space;q_{\textup{sp}}+\dot{q}_{\textup{sp}}\Delta&space;t" />
 
 where <img src="https://latex.codecogs.com/gif.latex?\Delta&space;t" /> is the control time step.
 
