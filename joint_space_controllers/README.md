@@ -9,25 +9,25 @@ The position-to-effort law expects a general rigid body dynamics system, whose e
 
 where <img src="https://latex.codecogs.com/gif.latex?q" />, <img src="https://latex.codecogs.com/gif.latex?M(\cdot)" />, <img src="https://latex.codecogs.com/gif.latex?C(\cdot)" />, and <img src="https://latex.codecogs.com/gif.latex?g(\cdot)" /> are the joint position vector, inertia matrix, Colioris vector, and gravity vector.
 
-The law computes the joint effort commands <img src="https://latex.codecogs.com/gif.latex?\tau_d" /> to track the joint position setpoints <img src="https://latex.codecogs.com/gif.latex?q_{\textup{sp}}" /> with compensation for the inertia, Colioris, and gravity forces.
+The law computes the joint effort commands <img src="https://latex.codecogs.com/gif.latex?\tau_d" /> to track the reference joint positions <img src="https://latex.codecogs.com/gif.latex?q_r" /> with compensation for the inertia, Colioris, and gravity forces.
 
-<img src="https://latex.codecogs.com/gif.latex?\tau_d=M(q)(\ddot{q}+\textup{PID}(q_{\textup{sp}}-q)+C(q,\dot{q})+g(q)" />
+<img src="https://latex.codecogs.com/gif.latex?\tau_d=M(q)(\ddot{q}+\textup{PID}(q_r-q)+C(q,\dot{q})+g(q)" />
 
 where <img src="https://latex.codecogs.com/gif.latex?\textup{PID}(\cdot)" /> is the control input to the system based on a PID controller for the position tracking errors.
 
 <img src="https://latex.codecogs.com/gif.latex?\textup{PID}(e)=K_pe+K_i\int&space;edt+K_d\dot{e}" />
 
 ### Position saturation law
-The position saturation law saturates position setpoints based on joint limits in robot description parameter.
+The position saturation law generates reference position by saturating position setpoints based on joint limits in robot description parameter.
 
-<img src="https://latex.codecogs.com/gif.latex?q_\textup{sp}\gets\textup{saturate}(q_\textup{sp})" />
+<img src="https://latex.codecogs.com/gif.latex?q_r=\textup{saturate}(q_\textup{sp})" />
 
 where <img src="https://latex.codecogs.com/gif.latex?\textup{saturate}(\cdot)" /> is a saturation function.
 
 ### Velocity-to-position law
-The velocity-to-position law just converts velocity setpoints to position setpoints by accumulating velocity setpoints.
+The velocity-to-position law just converts reference velocity to position by accumulating reference velocity.
 
-<img src="https://latex.codecogs.com/gif.latex?q_{\textup{sp}}&space;\gets&space;q_{\textup{sp}}+\dot{q}_{\textup{sp}}\Delta&space;t" />
+<img src="https://latex.codecogs.com/gif.latex?q_r&space;\gets&space;q_r+\dot{q}_r\Delta&space;t" />
 
 where <img src="https://latex.codecogs.com/gif.latex?\Delta&space;t" /> is the control time step.
 
