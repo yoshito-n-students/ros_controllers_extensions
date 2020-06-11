@@ -12,9 +12,11 @@ where <img src="https://latex.codecogs.com/gif.latex?q" />, <img src="https://la
 ### Pose-to-acceleration law
 The pose-to-acceleration law converts reference pose to acceleration in the task space by using a PID controller.
 
-<img src="https://latex.codecogs.com/gif.latex?\textup{PID}(e)=K_pe+K_i\int&space;edt+K_d\dot{e}" />
+<img src="https://latex.codecogs.com/gif.latex?\ddot{x}_r=\textup{PID}(x_r-x)" />
 
-where <img src="https://latex.codecogs.com/gif.latex?e=x_r-x" /> is the pose tracking error.
+where <img src="https://latex.codecogs.com/gif.latex?\textup{PID}(\cdot)" /> is the PID controller.
+
+<img src="https://latex.codecogs.com/gif.latex?\textup{PID}(e)=K_pe+K_i\int&space;edt+K_d\dot{e}" />
 
 ### Pose saturation law
 The pose saturation law generates reference pose by saturating pose setpoints based on predefined limits.
