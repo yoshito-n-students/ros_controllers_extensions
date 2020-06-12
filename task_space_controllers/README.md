@@ -7,7 +7,11 @@ The acceleration integration law converts the acceleration of the end-effector i
 
 <img src="https://latex.codecogs.com/gif.latex?\ddot{q}_r=J^\dagger(\ddot{x}_r-\dot{J}\dot{q})" />
 
-where <img src="https://latex.codecogs.com/gif.latex?q" />, <img src="https://latex.codecogs.com/gif.latex?x" />, <img src="https://latex.codecogs.com/gif.latex?J" /> are the position vector of the joints, the pose vector of the end-effector, and the Jacobian matrix. <img src="https://latex.codecogs.com/gif.latex?\bullet_r" /> and <img src="https://latex.codecogs.com/gif.latex?\bullet^\dagger" /> are reference values and pseudo-inverse (<img src="https://latex.codecogs.com/gif.latex?\bullet^\dagger=\bullet^T(\bullet\bullet^T)^{-1}" />).
+where <img src="https://latex.codecogs.com/gif.latex?q" />, <img src="https://latex.codecogs.com/gif.latex?x" />, <img src="https://latex.codecogs.com/gif.latex?J" /> are the position vector of the joints, the pose vector of the end-effector, and the Jacobian matrix. <img src="https://latex.codecogs.com/gif.latex?\bullet_r" /> and <img src="https://latex.codecogs.com/gif.latex?\bullet^\dagger" /> are reference values and pseudo-inverse. In this package, the pseudo-inverse is defined by the following equation.
+
+<img src="https://latex.codecogs.com/gif.latex?\bullet^\dagger=\bullet^T(\bullet\bullet^T+\lambda&space;I)^{-1}" />
+
+where <img src="https://latex.codecogs.com/gif.latex?\lambda" /> and <img src="https://latex.codecogs.com/gif.latex?I" /> are a small positive value and the identity matrix for regularization.
 
 ### Pose-to-acceleration law
 The pose-to-acceleration law converts reference pose to acceleration in the task space by using a PID controller.
