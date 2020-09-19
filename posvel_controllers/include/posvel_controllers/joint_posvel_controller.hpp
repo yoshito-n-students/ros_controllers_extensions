@@ -12,6 +12,7 @@
 #include <ros/node_handle.h>
 #include <ros/subscriber.h>
 #include <ros/time.h>
+#include <std_msgs/Float64.h>
 #include <std_msgs/Float64MultiArray.h>
 
 #include <boost/array.hpp>
@@ -22,7 +23,10 @@ class JointPosVelController
     : public controller_interface::Controller< hardware_interface::PosVelJointInterface > {
 public:
   JointPosVelController() {}
-  virtual ~JointPosVelController() { cmd_sub_.shutdown(); }
+  virtual ~JointPosVelController() {
+    cmd_subs_[0].shutdown();
+    cmd_subs_[1].shutdown();
+  }
 
   virtual bool init(hardware_interface::PosVelJointInterface *hw, ros::NodeHandle &nh) {
     std::string joint_name;
@@ -38,37 +42,50 @@ public:
       return false;
     }
 
-    cmd_sub_ = nh.subscribe< std_msgs::Float64MultiArray >("command", 1,
-                                                           &JointPosVelController::commandCB, this);
+    if (nh.param("separate_command", false)) {
+      cmd_subs_[0] = nh.subscribe< std_msgs::Float64 >(
+          "pos_command", 1, &JointPosVelController::separatedCommandCB< 0 >, this);
+      cmd_subs_[1] = nh.subscribe< std_msgs::Float64 >(
+          "vel_command", 1, &JointPosVelController::separatedCommandCB< 1 >, this);
+    } else {
+      cmd_subs_[0] = nh.subscribe< std_msgs::Float64MultiArray >(
+          "command", 1, &JointPosVelController::commandCB, this);
+    }
 
     return true;
   }
 
   virtual void starting(const ros::Time & /*time*/) {
-    const boost::array< double, 2 > command = {joint_.getPosition(), 0.};
-    command_buffer_.writeFromNonRT(command);
+    const boost::array< double, 2 > cmd = {joint_.getPosition(), 0.};
+    cmd_buf_.writeFromNonRT(cmd);
   }
 
   virtual void update(const ros::Time & /*time*/, const ros::Duration & /*period*/) {
-    const boost::array< double, 2 > *const command(command_buffer_.readFromRT());
-    joint_.setCommandPosition((*command)[0]);
-    joint_.setCommandVelocity((*command)[1]);
+    const boost::array< double, 2 > *const cmd(cmd_buf_.readFromRT());
+    joint_.setCommandPosition((*cmd)[0]);
+    joint_.setCommandVelocity((*cmd)[1]);
   }
 
 private:
   void commandCB(const std_msgs::Float64MultiArrayConstPtr &msg) {
     if (msg->data.size() == 2) {
-      const boost::array< double, 2 > command = {msg->data[0], msg->data[1]};
-      command_buffer_.writeFromNonRT(command);
+      const boost::array< double, 2 > cmd = {msg->data[0], msg->data[1]};
+      cmd_buf_.writeFromNonRT(cmd);
     } else {
       ROS_ERROR_STREAM("Data size must be 2 (received data size: " << msg->data.size() << ")");
     }
   }
 
+  template < std::size_t I > void separatedCommandCB(const std_msgs::Float64ConstPtr &msg) {
+    boost::array< double, 2 > cmd(*cmd_buf_.readFromNonRT());
+    cmd[I] = msg->data;
+    cmd_buf_.writeFromNonRT(cmd);
+  }
+
 private:
   hardware_interface::PosVelJointHandle joint_;
-  realtime_tools::RealtimeBuffer< boost::array< double, 2 > > command_buffer_;
-  ros::Subscriber cmd_sub_;
+  realtime_tools::RealtimeBuffer< boost::array< double, 2 > > cmd_buf_;
+  ros::Subscriber cmd_subs_[2];
 };
 } // namespace posvel_controllers
 
