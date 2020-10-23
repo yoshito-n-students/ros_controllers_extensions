@@ -1,0 +1,22 @@
+<library path="lib/libbyte_array_controllers">
+
+  <class name="byte_array_controllers/ByteArrayStateController" 
+         type="byte_array_controllers::ByteArrayStateController" 
+         base_class_type="controller_interface::ControllerBase">
+    <description>
+      The ByteArrayStateController populates all hardware_interface_extensions/ByteArrayHandles 
+      on the hardware_interface_extensions/ByteArrayStateInterface
+      and publishes data from the handles as a std_msgs/ByteMultiArray msg.
+    </description>
+  </class>
+
+  <class name="byte_array_controllers/ByteArrayCommandController" 
+         type="byte_array_controllers::ByteArrayCommandController" 
+         base_class_type="controller_interface::ControllerBase">
+    <description>
+      This controller subscribes std_msgs::ByteMultiarray
+      and forwards it to the hardware as commands.
+    </description>
+  </class>
+
+</library>
