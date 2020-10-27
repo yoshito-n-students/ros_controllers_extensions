@@ -1,0 +1,22 @@
+<library path="lib/libinteger_controllers">
+
+  <class name="integer_controllers/Int32StateController" 
+         type="integer_controllers::Int32StateController" 
+         base_class_type="controller_interface::ControllerBase">
+    <description>
+      The Int32StateController populates all hardware_interface_extensions/Int32StateHandles 
+      on the hardware_interface_extensions/Int32StateInterface
+      and publishes data from the handles as a std_msgs/Int32 msg.
+    </description>
+  </class>
+
+  <class name="integer_controllers/Int32Controller" 
+         type="integer_controllers::Int32Controller" 
+         base_class_type="controller_interface::ControllerBase">
+    <description>
+      This controller subscribes std_msgs::Int32
+      and forwards it to the hardware as commands.
+    </description>
+  </class>
+
+</library>
