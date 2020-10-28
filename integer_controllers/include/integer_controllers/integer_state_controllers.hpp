@@ -28,6 +28,12 @@ class IntegerStateController : public ci::Controller< InterfaceT > {
 public:
   typedef InterfaceT Interface;
 
+private:
+  typedef IntegerStateController< Interface > This;
+  typedef typename Interface::Handle Handle;
+  typedef typename Handle::Msg Msg;
+  typedef rt::RealtimePublisher< Msg > Publisher;
+
 public:
   IntegerStateController() {}
 
@@ -41,16 +47,17 @@ public:
       publishers_.push_back(boost::make_shared< Publisher >(root_nh, name, 1));
       deadlines_.push_back(ros::Time(0)); // zero time means no deadline
 
-      ROS_INFO_STREAM("IntegerStateController::init(): Initialzed a publisher (msg: '"
-                      << hi::internal::demangledTypeName< Msg >() << "', topic: '"
+      ROS_INFO_STREAM(hii::demangledTypeName< This >()
+                      << "::init(): Initialzed a publisher (msg: '"
+                      << hii::demangledTypeName< Msg >() << "', topic: '"
                       << root_nh.resolveName(name) << "')");
     }
 
-    // kind warning if no sensors found
+    // kind warning if no handles found
     if (hw_handles_.empty()) {
-      ROS_WARN_STREAM("IntegerStateController::init(): No "
-                      << hi::internal::demangledTypeName< Handle >() << " found on "
-                      << hi::internal::demangledTypeName< Interface >() << ". Will do nothing.");
+      ROS_WARN_STREAM(hii::demangledTypeName< This >()
+                      << "::init(): No " << hii::demangledTypeName< Handle >() << " found on "
+                      << hii::demangledTypeName< Interface >() << ". Will do nothing.");
     }
 
     return true;
@@ -69,9 +76,9 @@ public:
       }
       // check if can publish
       if (!publishers_[i]->trylock()) {
-        ROS_WARN_STREAM(
-            "IntegerStateController::update(): Failed to own the publisher associated with '"
-            << hw_handles_[i].getName() << "'. Will retry in the next cycle.");
+        ROS_WARN_STREAM(hii::demangledTypeName< This >()
+                        << "::update(): Failed to own the publisher associated with '"
+                        << hw_handles_[i].getName() << "'. Will retry in the next cycle.");
         continue;
       }
       // publish message
@@ -88,10 +95,6 @@ public:
   }
 
 private:
-  typedef typename Interface::Handle Handle;
-  typedef typename Handle::Msg Msg;
-  typedef realtime_tools::RealtimePublisher< Msg > Publisher;
-
   std::vector< Handle > hw_handles_;
   std::vector< boost::shared_ptr< Publisher > > publishers_;
   std::vector< ros::Time > deadlines_;
@@ -101,7 +104,16 @@ private:
 //////////////////////////
 // State controller types
 
+// signed 8-64
+typedef IntegerStateController< hie::Int8StateInterface > Int8StateController;
+typedef IntegerStateController< hie::Int16StateInterface > Int16StateController;
 typedef IntegerStateController< hie::Int32StateInterface > Int32StateController;
+typedef IntegerStateController< hie::Int64StateInterface > Int64StateController;
+// unsigned 8-64
+typedef IntegerStateController< hie::UInt8StateInterface > UInt8StateController;
+typedef IntegerStateController< hie::UInt16StateInterface > UInt16StateController;
+typedef IntegerStateController< hie::UInt32StateInterface > UInt32StateController;
+typedef IntegerStateController< hie::UInt64StateInterface > UInt64StateController;
 
 } // namespace integer_controllers
 

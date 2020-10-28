@@ -25,21 +25,30 @@ class IntegerCommandController : public ci::Controller< InterfaceT > {
 public:
   typedef InterfaceT Interface;
 
+private:
+  typedef IntegerCommandController< Interface > This;
+  typedef typename Interface::Handle Handle;
+  typedef typename Handle::Data Data;
+  typedef typename Handle::Msg Msg;
+
 public:
   IntegerCommandController() {}
+
   virtual ~IntegerCommandController() { cmd_sub_.shutdown(); }
 
   virtual bool init(Interface *hw, ros::NodeHandle &nh) {
     std::string handle_name;
     if (!nh.getParam("handle", handle_name)) {
-      ROS_ERROR_STREAM("Failed to get required param " << nh.resolveName("handle"));
+      ROS_ERROR_STREAM(hii::demangledTypeName< This >()
+                       << "::init(): Failed to get required param " << nh.resolveName("handle"));
       return false;
     }
 
     try {
       cmd_handle_ = hw->getHandle(handle_name);
     } catch (const hi::HardwareInterfaceException &ex) {
-      ROS_ERROR_STREAM("Failed to get hardware handle: " << ex.what());
+      ROS_ERROR_STREAM(hii::demangledTypeName< This >()
+                       << "::init(): Failed to get hardware handle: " << ex.what());
       return false;
     }
 
@@ -57,23 +66,27 @@ public:
   }
 
 private:
-  typedef typename Interface::Handle Handle;
-  typedef typename Handle::Data Data;
-  typedef typename Handle::Msg Msg;
-
-private:
   void commandCB(const typename Msg::ConstPtr &msg) { cmd_buf_.writeFromNonRT(msg->data); }
 
 private:
   Handle cmd_handle_;
-  realtime_tools::RealtimeBuffer< Data > cmd_buf_;
+  rt::RealtimeBuffer< Data > cmd_buf_;
   ros::Subscriber cmd_sub_;
 };
 
 ////////////////////////////
 // Command controller types
 
+// signed 8-64
+typedef IntegerCommandController< hie::Int8Interface > Int8Controller;
+typedef IntegerCommandController< hie::Int16Interface > Int16Controller;
 typedef IntegerCommandController< hie::Int32Interface > Int32Controller;
+typedef IntegerCommandController< hie::Int64Interface > Int64Controller;
+// unsigned 8-64
+typedef IntegerCommandController< hie::UInt8Interface > UInt8Controller;
+typedef IntegerCommandController< hie::UInt16Interface > UInt16Controller;
+typedef IntegerCommandController< hie::UInt32Interface > UInt32Controller;
+typedef IntegerCommandController< hie::UInt64Interface > UInt64Controller;
 
 } // namespace integer_controllers
 

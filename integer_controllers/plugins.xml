@@ -1,5 +1,27 @@
 <library path="lib/libinteger_controllers">
 
+  <!-- State controllers (signed 8-64) -->
+
+  <class name="integer_controllers/Int8StateController" 
+         type="integer_controllers::Int8StateController" 
+         base_class_type="controller_interface::ControllerBase">
+    <description>
+      The Int8StateController populates all hardware_interface_extensions/Int8StateHandles 
+      on the hardware_interface_extensions/Int8StateInterface
+      and publishes data from the handles as a std_msgs/Int8 msg.
+    </description>
+  </class>
+
+  <class name="integer_controllers/Int16StateController" 
+         type="integer_controllers::Int16StateController" 
+         base_class_type="controller_interface::ControllerBase">
+    <description>
+      The Int16StateController populates all hardware_interface_extensions/Int16StateHandles 
+      on the hardware_interface_extensions/Int16StateInterface
+      and publishes data from the handles as a std_msgs/Int16 msg.
+    </description>
+  </class>
+
   <class name="integer_controllers/Int32StateController" 
          type="integer_controllers::Int32StateController" 
          base_class_type="controller_interface::ControllerBase">
@@ -10,12 +32,131 @@
     </description>
   </class>
 
+  <class name="integer_controllers/Int64StateController" 
+         type="integer_controllers::Int64StateController" 
+         base_class_type="controller_interface::ControllerBase">
+    <description>
+      The Int64StateController populates all hardware_interface_extensions/Int64StateHandles 
+      on the hardware_interface_extensions/Int64StateInterface
+      and publishes data from the handles as a std_msgs/Int64 msg.
+    </description>
+  </class>
+
+  <!-- State controllers (unsigned 8-64) -->
+
+  <class name="integer_controllers/UInt8StateController" 
+         type="integer_controllers::UInt8StateController" 
+         base_class_type="controller_interface::ControllerBase">
+    <description>
+      The UInt8StateController populates all hardware_interface_extensions/UInt8StateHandles 
+      on the hardware_interface_extensions/UInt8StateInterface
+      and publishes data from the handles as a std_msgs/UInt8 msg.
+    </description>
+  </class>
+
+  <class name="integer_controllers/UInt16StateController" 
+         type="integer_controllers::UInt16StateController" 
+         base_class_type="controller_interface::ControllerBase">
+    <description>
+      The UInt16StateController populates all hardware_interface_extensions/UInt16StateHandles 
+      on the hardware_interface_extensions/UInt16StateInterface
+      and publishes data from the handles as a std_msgs/UInt16 msg.
+    </description>
+  </class>
+
+  <class name="integer_controllers/UInt32StateController" 
+         type="integer_controllers::UInt32StateController" 
+         base_class_type="controller_interface::ControllerBase">
+    <description>
+      The UInt32StateController populates all hardware_interface_extensions/UInt32StateHandles 
+      on the hardware_interface_extensions/UInt32StateInterface
+      and publishes data from the handles as a std_msgs/UInt32 msg.
+    </description>
+  </class>
+
+  <class name="integer_controllers/UInt64StateController" 
+         type="integer_controllers::UInt64StateController" 
+         base_class_type="controller_interface::ControllerBase">
+    <description>
+      The UInt64StateController populates all hardware_interface_extensions/UInt64StateHandles 
+      on the hardware_interface_extensions/UInt64StateInterface
+      and publishes data from the handles as a std_msgs/UInt64 msg.
+    </description>
+  </class>
+
+  <!-- Command controllers (signed 8-64) -->
+
+  <class name="integer_controllers/Int8Controller" 
+         type="integer_controllers::Int8Controller" 
+         base_class_type="controller_interface::ControllerBase">
+    <description>
+      The Int8Controller subscribes std_msgs/Int8
+      and forwards it to a hardware_interface_extensions/Int8Handle as commands.
+    </description>
+  </class>
+
+  <class name="integer_controllers/Int16Controller" 
+         type="integer_controllers::Int16Controller" 
+         base_class_type="controller_interface::ControllerBase">
+    <description>
+      The Int16Controller subscribes std_msgs/Int16
+      and forwards it to a hardware_interface_extensions/Int16Handle as commands.
+    </description>
+  </class>
+
   <class name="integer_controllers/Int32Controller" 
          type="integer_controllers::Int32Controller" 
          base_class_type="controller_interface::ControllerBase">
     <description>
-      This controller subscribes std_msgs::Int32
-      and forwards it to the hardware as commands.
+      The Int32Controller subscribes std_msgs/Int32
+      and forwards it to a hardware_interface_extensions/Int32Handle as commands.
+    </description>
+  </class>
+
+  <class name="integer_controllers/Int64Controller" 
+         type="integer_controllers::Int64Controller" 
+         base_class_type="controller_interface::ControllerBase">
+    <description>
+      The Int64Controller subscribes std_msgs/Int64
+      and forwards it to a hardware_interface_extensions/Int64Handle as commands.
+    </description>
+  </class>
+
+  <!-- Command controllers (unsigned 8-64) -->
+
+  <class name="integer_controllers/UInt8Controller" 
+         type="integer_controllers::UInt8Controller" 
+         base_class_type="controller_interface::ControllerBase">
+    <description>
+      The UInt8Controller subscribes std_msgs/UInt8
+      and forwards it to a hardware_interface_extensions/UInt8Handle as commands.
+    </description>
+  </class>
+
+  <class name="integer_controllers/UInt16Controller" 
+         type="integer_controllers::UInt16Controller" 
+         base_class_type="controller_interface::ControllerBase">
+    <description>
+      The UInt16Controller subscribes std_msgs/UInt16
+      and forwards it to a hardware_interface_extensions/UInt16Handle as commands.
+    </description>
+  </class>
+
+  <class name="integer_controllers/UInt32Controller" 
+         type="integer_controllers::UInt32Controller" 
+         base_class_type="controller_interface::ControllerBase">
+    <description>
+      The UInt32Controller subscribes std_msgs/UInt32
+      and forwards it to a hardware_interface_extensions/UInt32Handle as commands.
+    </description>
+  </class>
+
+  <class name="integer_controllers/UInt64Controller" 
+         type="integer_controllers::UInt64Controller" 
+         base_class_type="controller_interface::ControllerBase">
+    <description>
+      The UInt64Controller subscribes std_msgs/UInt64
+      and forwards it to a hardware_interface_extensions/UInt64Handle as commands.
     </description>
   </class>
 
