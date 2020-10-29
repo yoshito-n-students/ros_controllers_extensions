@@ -1,6 +1,7 @@
 #ifndef INTEGER_CONTROLLERS_INTEGER_STATE_CONTROLLERS_HPP
 #define INTEGER_CONTROLLERS_INTEGER_STATE_CONTROLLERS_HPP
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -13,10 +14,6 @@
 #include <ros/duration.h>
 #include <ros/node_handle.h>
 #include <ros/time.h>
-
-#include <boost/foreach.hpp>
-#include <boost/make_shared.hpp>
-#include <boost/shared_ptr.hpp>
 
 namespace integer_controllers {
 
@@ -42,9 +39,9 @@ public:
     interval_ = ros::Duration(controller_nh.param("interval", 1.));
 
     // launch publishers for each sensor
-    BOOST_FOREACH (const std::string &name, hw->getNames()) {
+    for (const std::string &name : hw->getNames()) {
       hw_handles_.push_back(hw->getHandle(name));
-      publishers_.push_back(boost::make_shared< Publisher >(root_nh, name, 1));
+      publishers_.push_back(std::make_shared< Publisher >(root_nh, name, 1));
       deadlines_.push_back(ros::Time(0)); // zero time means no deadline
 
       ROS_INFO_STREAM(hii::demangledTypeName< This >()
@@ -65,7 +62,9 @@ public:
 
   virtual void starting(const ros::Time &time) {
     // set publish deadlines as the current time
-    BOOST_FOREACH (ros::Time &deadline, deadlines_) { deadline = time; }
+    for (ros::Time &deadline : deadlines_) {
+      deadline = time;
+    }
   }
 
   virtual void update(const ros::Time &time, const ros::Duration &period) {
@@ -91,12 +90,14 @@ public:
 
   virtual void stopping(const ros::Time &time) {
     // unset publish deadlines
-    BOOST_FOREACH (ros::Time &deadline, deadlines_) { deadline = ros::Time(0); }
+    for (ros::Time &deadline : deadlines_) {
+      deadline = ros::Time(0);
+    }
   }
 
 private:
   std::vector< Handle > hw_handles_;
-  std::vector< boost::shared_ptr< Publisher > > publishers_;
+  std::vector< std::shared_ptr< Publisher > > publishers_;
   std::vector< ros::Time > deadlines_;
   ros::Duration interval_;
 };

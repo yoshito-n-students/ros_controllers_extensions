@@ -52,7 +52,7 @@ public:
       return false;
     }
 
-    cmd_sub_ = nh.subscribe< Msg >("command", 1, &IntegerCommandController::commandCB, this);
+    cmd_sub_ = nh.subscribe< Msg >("command", 1, &This::commandCB, this);
 
     return true;
   }
