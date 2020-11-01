@@ -1,6 +1,7 @@
 #ifndef INTEGER_CONTROLLERS_INTEGER_STATE_CONTROLLERS_HPP
 #define INTEGER_CONTROLLERS_INTEGER_STATE_CONTROLLERS_HPP
 
+#include <cctype>
 #include <memory>
 #include <string>
 #include <vector>
@@ -39,15 +40,16 @@ public:
     interval_ = ros::Duration(controller_nh.param("interval", 1.));
 
     // launch publishers for each sensor
-    for (const std::string &name : hw->getNames()) {
-      hw_handles_.push_back(hw->getHandle(name));
-      publishers_.push_back(std::make_shared< Publisher >(root_nh, name, 1));
+    for (const std::string &hw_name : hw->getNames()) {
+      hw_handles_.push_back(hw->getHandle(hw_name));
+      const std::string topic_name(toTopicName(hw_name));
+      publishers_.push_back(std::make_shared< Publisher >(root_nh, topic_name, 1));
       deadlines_.push_back(ros::Time(0)); // zero time means no deadline
 
       ROS_INFO_STREAM(hii::demangledTypeName< This >()
                       << "::init(): Initialzed a publisher (msg: '"
                       << hii::demangledTypeName< Msg >() << "', topic: '"
-                      << root_nh.resolveName(name) << "')");
+                      << root_nh.resolveName(topic_name) << "')");
     }
 
     // kind warning if no handles found
@@ -93,6 +95,22 @@ public:
     for (ros::Time &deadline : deadlines_) {
       deadline = ros::Time(0);
     }
+  }
+
+private:
+  // convert "A/Name 1" to "a_name_1", which sounds valid and natural as a topic name
+  static std::string toTopicName(const std::string &in) {
+    std::string out;
+    for (const std::string::value_type c : in) {
+      if (std::isupper(c)) {
+        out.push_back(std::tolower(c));
+      } else if (std::islower(c) || std::isdigit(c)) {
+        out.push_back(c);
+      } else {
+        out.push_back('_');
+      }
+    }
+    return out;
   }
 
 private:
