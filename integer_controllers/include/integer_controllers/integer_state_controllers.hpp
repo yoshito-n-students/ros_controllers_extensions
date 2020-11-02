@@ -98,13 +98,14 @@ public:
   }
 
 private:
-  // convert "A/Name 1" to "a_name_1", which sounds valid and natural as a topic name
+  // convert "Device/State Item 01" to "device/state_item_01",
+  // which sounds valid and natural as a topic name
   static std::string toTopicName(const std::string &in) {
     std::string out;
     for (const std::string::value_type c : in) {
       if (std::isupper(c)) {
         out.push_back(std::tolower(c));
-      } else if (std::islower(c) || std::isdigit(c)) {
+      } else if (std::islower(c) || std::isdigit(c) || c == '/') {
         out.push_back(c);
       } else {
         out.push_back('_');
