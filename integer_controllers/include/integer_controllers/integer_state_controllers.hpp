@@ -35,7 +35,8 @@ private:
 public:
   IntegerStateController() {}
 
-  virtual bool init(Interface *hw, ros::NodeHandle &root_nh, ros::NodeHandle &controller_nh) {
+  virtual bool init(Interface *hw, ros::NodeHandle &root_nh,
+                    ros::NodeHandle &controller_nh) override {
     // load params
     interval_ = ros::Duration(controller_nh.param("interval", 1.));
 
@@ -62,14 +63,14 @@ public:
     return true;
   }
 
-  virtual void starting(const ros::Time &time) {
+  virtual void starting(const ros::Time &time) override {
     // set publish deadlines as the current time
     for (ros::Time &deadline : deadlines_) {
       deadline = time;
     }
   }
 
-  virtual void update(const ros::Time &time, const ros::Duration &period) {
+  virtual void update(const ros::Time &time, const ros::Duration &period) override {
     for (std::size_t i = 0; i < hw_handles_.size(); ++i) {
       // check if deadline has come
       if (deadlines_[i].isZero() || deadlines_[i] > time) {
@@ -90,7 +91,7 @@ public:
     }
   }
 
-  virtual void stopping(const ros::Time &time) {
+  virtual void stopping(const ros::Time &time) override {
     // unset publish deadlines
     for (ros::Time &deadline : deadlines_) {
       deadline = ros::Time(0);

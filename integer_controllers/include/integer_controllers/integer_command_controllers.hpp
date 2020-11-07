@@ -36,7 +36,7 @@ public:
 
   virtual ~IntegerCommandController() { cmd_sub_.shutdown(); }
 
-  virtual bool init(Interface *hw, ros::NodeHandle &nh) {
+  virtual bool init(Interface *hw, ros::NodeHandle &nh) override {
     std::string handle_name;
     if (!nh.getParam("handle", handle_name)) {
       ROS_ERROR_STREAM(hii::demangledTypeName< This >()
@@ -57,11 +57,11 @@ public:
     return true;
   }
 
-  virtual void starting(const ros::Time & /*time*/) {
+  virtual void starting(const ros::Time & /*time*/) override {
     cmd_buf_.writeFromNonRT(cmd_handle_.getState());
   }
 
-  virtual void update(const ros::Time & /*time*/, const ros::Duration & /*period*/) {
+  virtual void update(const ros::Time & /*time*/, const ros::Duration & /*period*/) override {
     cmd_handle_.setCommand(*cmd_buf_.readFromRT());
   }
 
