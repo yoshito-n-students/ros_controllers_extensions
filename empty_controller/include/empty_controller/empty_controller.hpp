@@ -3,7 +3,7 @@
 
 #include <controller_interface/controller_base.h>
 #include <hardware_interface/robot_hw.h>
-#include <ros/common.h>
+#include <ros/common.h> // for ROS_VERSION
 #include <ros/duration.h>
 #include <ros/node_handle.h>
 #include <ros/time.h>
