@@ -3,6 +3,7 @@
 
 #include <controller_interface/controller_base.h>
 #include <hardware_interface/robot_hw.h>
+#include <ros/common.h>
 #include <ros/duration.h>
 #include <ros/node_handle.h>
 #include <ros/time.h>
@@ -17,7 +18,13 @@ public:
                            ros::NodeHandle & /*root_nh*/, ros::NodeHandle & /*controller_nh*/,
                            ClaimedResources &claimed_resources) {
     claimed_resources.clear(); // claims no hw resources because this controller does nothing
+#if ROS_VERSION >= ROS_VERSION_COMBINED(1, 15, 0)
+    // noetic
+    state_ = ControllerState::INITIALIZED;
+#else
+    // melodic or earlier
     state_ = INITIALIZED;
+#endif
     return true;
   }
 };
