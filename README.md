@@ -6,10 +6,6 @@ extensions for ros_controllers
 * controller which does completely nothing
 * useful when notifing hardware to something by just swithing to this controller
 
-## [joint_space_controllers package](joint_space_controllers)
-* dynamics-based controllers for manipulators, which takes setpoints in the joint space
-* see [README](joint_space_controllers/README.md) for details
-
 ## [posvel_controllers package](posvel_controllers)
 ### posvel_controllers/JointPosVelController
 #### <u>Subscribed topics</u>
@@ -56,7 +52,3 @@ ___<controller_namespace>/joint___ (string, required)
 
 ___<controller_namespace>/separate_command___ (bool, default: true)
 * if true, position, velocity & effort commands are separately subscribed
-
-## [task_space_controllers package](task_space_controllers)
-* dynamics-based controllers for manipulators, which takes setpoints in the task space
-* see [README](task_space_controllers/README.md) for details
